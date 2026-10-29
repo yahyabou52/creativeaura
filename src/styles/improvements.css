@@ -4,7 +4,7 @@
   margin-left: -6.81818%;
   padding: clamp(80px, 9vw, 150px) 6vw 34px;
   overflow: hidden;
-  background: #25242d;
+  background: #10213d;
   color: #f1f1ed;
 }
 
@@ -40,8 +40,8 @@
   width: 9px;
   height: 9px;
   border-radius: 50%;
-  background: #ff863d;
-  box-shadow: 0 0 0 6px #ff863d25;
+  background: #83d9f3;
+  box-shadow: 0 0 0 6px #83d9f325;
 }
 
 .client-work-intro h2 {
@@ -52,7 +52,7 @@
 
 .client-work-intro h2 em {
   font: inherit;
-  color: #ff863d;
+  color: #83d9f3;
 }
 
 .client-work-intro > p {
@@ -108,7 +108,7 @@
 
 .client-story-bottom h3 em {
   font: inherit;
-  color: #ff863d;
+  color: #83d9f3;
 }
 
 .client-story-bottom > span {
@@ -136,7 +136,7 @@
   right: -8%;
   top: 1%;
   border-radius: 50%;
-  background: radial-gradient(circle at 29% 25%, #ffe0b5 0, #ffad66 18%, #ff863d 42%, #b94d24 73%, #5a239c 100%);
+  background: radial-gradient(circle at 29% 25%, #e5f8fd 0, #9fe5f7 18%, #83d9f3 42%, #247aa4 73%, #5a239c 100%);
   box-shadow: inset -25px -30px 50px #5a239c77, 0 22px 60px #080a5e77;
 }
 
@@ -165,7 +165,7 @@
   letter-spacing: .15em;
 }
 
-.digital-window-bar span { color: #ff863d; }
+.digital-window-bar span { color: #83d9f3; }
 
 .digital-window-body {
   position: relative;
@@ -179,7 +179,7 @@
   font: 700 clamp(35px, 4.7vw, 78px)/.83 'Barlow Condensed', sans-serif;
 }
 
-.digital-window-body > span i { color: #ff863d; font-style: normal; }
+.digital-window-body > span i { color: #83d9f3; font-style: normal; }
 .digital-window-body small { position: absolute; bottom: 13%; left: 7%; font: 600 8px 'DM Sans', sans-serif; letter-spacing: .1em; }
 
 .digital-window-shape {
@@ -207,7 +207,7 @@
   top: 0;
   left: 7%;
   font: 400 clamp(80px, 12vw, 180px)/1 'DM Sans', sans-serif;
-  color: #ff863d;
+  color: #83d9f3;
   transform: rotate(-19deg);
 }
 
@@ -240,8 +240,8 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  background: #ff863d;
-  color: #25242d;
+  background: #83d9f3;
+  color: #10213d;
   font: 800 14px/1.05 'Barlow Condensed', sans-serif;
   letter-spacing: .03em;
   transform: rotate(14deg);
@@ -255,7 +255,7 @@
   left: -5%;
   font: 700 clamp(100px, 16vw, 250px)/1 'Barlow Condensed', sans-serif;
   color: transparent;
-  -webkit-text-stroke: 1px #25242d55;
+  -webkit-text-stroke: 1px #10213d55;
   transform: rotate(-90deg) translateX(-85%);
   transform-origin: left top;
 }
@@ -278,8 +278,8 @@
   top: 0;
   z-index: 100;
   background: #f1f1edf2;
-  border-bottom: 1px solid #25242d10;
-  box-shadow: 0 8px 28px #25242d0a;
+  border-bottom: 1px solid #10213d10;
+  box-shadow: 0 8px 28px #10213d0a;
 }
 
 /* Content and controls should remain legible at their smallest breakpoint. */
@@ -340,7 +340,7 @@
 .case-brief-copy h3 { font-size: 16px; }
 .concept-disclosure p { font-size: 14px; line-height: 1.55; }
 
-/* Use the logo's sky blue as a soft counterpoint to the orange. */
+/* Use the logo's sky blue as the primary accent with deep navy support. */
 :root {
   --brand-sky: #3dd0fc;
   --brand-sky-soft: #85bdd1;
@@ -445,7 +445,7 @@
   border-radius: 999px;
   background: #f1f1edf0;
   backdrop-filter: blur(18px);
-  box-shadow: 0 12px 30px #25242d16, 0 2px 7px #25242d0d;
+  box-shadow: 0 12px 30px #10213d16, 0 2px 7px #10213d0d;
   transition: box-shadow .35s ease, transform .35s ease;
 }
 
@@ -453,7 +453,7 @@
 .scrolled .site-header,
 .inner-page .site-header {
   transform: translateY(-3px);
-  box-shadow: 0 20px 48px #25242d24, 0 4px 12px #25242d12;
+  box-shadow: 0 20px 48px #10213d24, 0 4px 12px #10213d12;
 }
 
 .site-header > .brand,
