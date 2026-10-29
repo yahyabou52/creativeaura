@@ -526,3 +526,105 @@
   .site-header > .brand svg.brand-asset { width: 116px !important; }
   .header-actions > .small-cta { min-width: 104px; padding-inline: 10px; }
 }
+
+/* Editorial labels and calls to action need to read at normal viewing distance. */
+.hero-meta { font-size: 15px; letter-spacing: .07em; font-weight: 700; }
+.hero-signature { font-size: 14px; letter-spacing: .045em; font-weight: 600; }
+.gallery-label,
+.section-kicker,
+.work .eyebrow,
+.process-cards .eyebrow,
+  .portfolio-intro .eyebrow { font-size: 14px; letter-spacing: .06em; }
+.hero-card figcaption,
+.work-caption > div > span,
+.work-caption > span,
+.work-bottom > span,
+.work-count i,
+.service-list summary span,
+.feeling-top span,
+.lab-hint,
+.process-number,
+.project-kind,
+.route-breadcrumb,
+.client-story-top,
+.client-story-bottom > span,
+  .client-work-end { font-size: 13px; line-height: 1.5; }
+.under-link,
+.secondary-action,
+  .case-page .secondary-action { font-size: 16px; font-weight: 650; line-height: 1.4; }
+.under-link { min-height: 48px; align-items: center; }
+.hero-end .under-link { max-width: 240px; min-width: 220px; white-space: nowrap; }
+.aura-cta,
+.primary-action,
+.solid-button,
+.service-start,
+.portfolio-open,
+  .portfolio-filters > button { font-size: 15px; font-weight: 700; }
+.header-actions > .small-cta { font-size: 14px; font-weight: 700; }
+.form-intro,
+.form-note,
+.portfolio-card-caption div > span,
+.case-metadata div > span,
+  .case-page .eyebrow { font-size: 13px; line-height: 1.5; }
+.studio-side > span,
+.feeling-bottom > span,
+.nav-top,
+.nav-bottom { font-size: 13px; line-height: 1.5; }
+.contact-lower > .under-link { font-size: 16px; font-weight: 700; }
+.footer-top .motion-toggle { font-size: 12px; font-weight: 700; }
+
+@media (max-width: 700px) {
+  .hero-end {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 30px 6% 38px;
+  }
+  .hero-end p { max-width: 470px; margin: 0; }
+  .hero-end .under-link {
+    width: auto;
+    max-width: none;
+    min-width: 220px;
+    white-space: nowrap;
+    margin: 0;
+  }
+  .hero-meta { font-size: 12px; letter-spacing: .035em; }
+  .hero-signature { font-size: 12px; letter-spacing: .01em; gap: 9px; }
+  .gallery-label,
+  .section-kicker,
+  .work .eyebrow,
+  .process-cards .eyebrow { font-size: 12px; }
+  .hero-card figcaption,
+  .work-caption > div > span,
+  .work-caption > span,
+  .work-bottom > span,
+  .work-count i,
+  .feeling-top span,
+  .lab-hint,
+  .process-number,
+  .project-kind,
+  .client-story-top,
+  .client-story-bottom > span,
+  .client-work-end { font-size: 12px; }
+  .under-link,
+  .secondary-action { font-size: 14px; }
+  .aura-cta,
+  .primary-action,
+  .solid-button,
+  .service-start,
+  .portfolio-open { font-size: 13px; }
+  .header-actions > .small-cta { font-size: 12px; }
+  .studio-side > span,
+  .feeling-bottom > span,
+  .nav-top,
+  .nav-bottom { font-size: 12px; }
+  .contact-lower > .under-link { font-size: 14px; }
+}
+
+/* Keep the oversized hero title clear of the signature and CTA row. */
+@media (min-width: 701px) {
+  .hero h1.sculptural-title {
+    top: clamp(-60px, calc(425px - 25vw), 0px);
+  }
+}
