@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /business-intake
+
+Sitemap: https://c-aura.com/sitemap.xml

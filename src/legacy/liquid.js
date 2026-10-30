@@ -1,1 +1,116 @@
-(()=>{const img=document.querySelector('.sculpture-card img');if(!img)return;const host=img.parentElement,canvas=document.createElement('canvas');canvas.className='liquid-canvas';canvas.setAttribute('aria-hidden','true');const gl=canvas.getContext('webgl',{alpha:false,antialias:false,powerPreference:'low-power'});if(!gl)return;const vertex='attribute vec2 a;varying vec2 v;void main(){v=a*.5+.5;gl_Position=vec4(a,0.,1.);}';const fragment=`precision mediump float;varying vec2 v;uniform sampler2D tex;uniform vec2 mouse;uniform float amount;uniform float time;uniform float aspect;uniform float imageAspect;void main(){vec2 uv=vec2(v.x,1.-v.y);vec2 cover=vec2(1.);if(aspect>imageAspect){cover.y=imageAspect/aspect;}else{cover.x=aspect/imageAspect;}vec2 d=uv-mouse;d.x*=aspect;float distance=length(d);float wave=sin(distance*18.-time*3.)*exp(-distance*5.)*amount*.018;vec2 warped=uv+normalize(d+vec2(.0001))*wave;warped=(warped-.5)*cover+.5;vec4 color=texture2D(tex,warped);float r=texture2D(tex,warped+vec2(wave*.08,0.)).r;float b=texture2D(tex,warped-vec2(wave*.08,0.)).b;gl_FragColor=vec4(r,color.g,b,1.);}`;function shader(type,source){const s=gl.createShader(type);gl.shaderSource(s,source);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw new Error('Shader unavailable');return s}let program;try{program=gl.createProgram();gl.attachShader(program,shader(gl.VERTEX_SHADER,vertex));gl.attachShader(program,shader(gl.FRAGMENT_SHADER,fragment));gl.linkProgram(program);if(!gl.getProgramParameter(program,gl.LINK_STATUS))return}catch{return}gl.useProgram(program);const buffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buffer);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]),gl.STATIC_DRAW);const a=gl.getAttribLocation(program,'a');gl.enableVertexAttribArray(a);gl.vertexAttribPointer(a,2,gl.FLOAT,false,0,0);const texture=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,texture);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);const loc={};['mouse','amount','time','aspect','imageAspect'].forEach(n=>loc[n]=gl.getUniformLocation(program,n));let ready=false,over=false,px=.5,py=.5,mx=.5,my=.5,amount=0,visible=true;const obs=new IntersectionObserver(e=>visible=e[0].isIntersecting);obs.observe(host);function initialize(){if(ready||!img.naturalWidth)return;try{gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,img);host.append(canvas);ready=true;resize();draw(0)}catch{canvas.remove()}}function resize(){const r=host.getBoundingClientRect(),d=Math.min(devicePixelRatio,1.5);canvas.width=Math.round(host.clientWidth*d);canvas.height=Math.round(host.clientHeight*d);gl.viewport(0,0,canvas.width,canvas.height);gl.uniform1f(loc.aspect,host.clientWidth/host.clientHeight);gl.uniform1f(loc.imageAspect,img.naturalWidth/img.naturalHeight)}host.addEventListener('pointermove',e=>{const r=host.getBoundingClientRect();mx=(e.clientX-r.left)/r.width;my=(e.clientY-r.top)/r.height;over=true});host.addEventListener('pointerleave',()=>over=false);window.addEventListener('resize',resize);canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();ready=false;canvas.style.display='none'});function draw(t){if(!ready)return;const disabled=document.documentElement.classList.contains('no-motion');if(visible){px+=(mx-px)*.06;py+=(my-py)*.06;amount+=((over&&!disabled?1:0)-amount)*.045;gl.uniform2f(loc.mouse,px,py);gl.uniform1f(loc.amount,amount);gl.uniform1f(loc.time,t*.001);gl.drawArrays(gl.TRIANGLES,0,6)}requestAnimationFrame(draw)}if(img.complete)initialize();else img.addEventListener('load',initialize,{once:true});})();
+(() => {
+  const img = document.querySelector(".sculpture-card img");
+  if (!img) return;
+  const host = img.parentElement,
+    canvas = document.createElement("canvas");
+  canvas.className = "liquid-canvas";
+  canvas.setAttribute("aria-hidden", "true");
+  const gl = canvas.getContext("webgl", {
+    alpha: false,
+    antialias: false,
+    powerPreference: "low-power",
+  });
+  if (!gl) return;
+  const vertex =
+    "attribute vec2 a;varying vec2 v;void main(){v=a*.5+.5;gl_Position=vec4(a,0.,1.);}";
+  const fragment = `precision mediump float;varying vec2 v;uniform sampler2D tex;uniform vec2 mouse;uniform float amount;uniform float time;uniform float aspect;uniform float imageAspect;void main(){vec2 uv=vec2(v.x,1.-v.y);vec2 cover=vec2(1.);if(aspect>imageAspect){cover.y=imageAspect/aspect;}else{cover.x=aspect/imageAspect;}vec2 d=uv-mouse;d.x*=aspect;float distance=length(d);float wave=sin(distance*18.-time*3.)*exp(-distance*5.)*amount*.018;vec2 warped=uv+normalize(d+vec2(.0001))*wave;warped=(warped-.5)*cover+.5;vec4 color=texture2D(tex,warped);float r=texture2D(tex,warped+vec2(wave*.08,0.)).r;float b=texture2D(tex,warped-vec2(wave*.08,0.)).b;gl_FragColor=vec4(r,color.g,b,1.);}`;
+  function shader(type, source) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, source);
+    gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS))
+      throw new Error("Shader unavailable");
+    return s;
+  }
+  let program;
+  try {
+    program = gl.createProgram();
+    gl.attachShader(program, shader(gl.VERTEX_SHADER, vertex));
+    gl.attachShader(program, shader(gl.FRAGMENT_SHADER, fragment));
+    gl.linkProgram(program);
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return;
+  } catch {
+    return;
+  }
+  gl.useProgram(program);
+  const buffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+  gl.bufferData(
+    gl.ARRAY_BUFFER,
+    new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]),
+    gl.STATIC_DRAW,
+  );
+  const a = gl.getAttribLocation(program, "a");
+  gl.enableVertexAttribArray(a);
+  gl.vertexAttribPointer(a, 2, gl.FLOAT, false, 0, 0);
+  const texture = gl.createTexture();
+  gl.bindTexture(gl.TEXTURE_2D, texture);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  const loc = {};
+  ["mouse", "amount", "time", "aspect", "imageAspect"].forEach(
+    (n) => (loc[n] = gl.getUniformLocation(program, n)),
+  );
+  let ready = false,
+    over = false,
+    px = 0.5,
+    py = 0.5,
+    mx = 0.5,
+    my = 0.5,
+    amount = 0,
+    visible = true;
+  const obs = new IntersectionObserver((e) => (visible = e[0].isIntersecting));
+  obs.observe(host);
+  function initialize() {
+    if (ready || !img.naturalWidth) return;
+    try {
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+      host.append(canvas);
+      ready = true;
+      resize();
+      draw(0);
+    } catch {
+      canvas.remove();
+    }
+  }
+  function resize() {
+    const r = host.getBoundingClientRect(),
+      d = Math.min(devicePixelRatio, 1.5);
+    canvas.width = Math.round(host.clientWidth * d);
+    canvas.height = Math.round(host.clientHeight * d);
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.uniform1f(loc.aspect, host.clientWidth / host.clientHeight);
+    gl.uniform1f(loc.imageAspect, img.naturalWidth / img.naturalHeight);
+  }
+  host.addEventListener("pointermove", (e) => {
+    const r = host.getBoundingClientRect();
+    mx = (e.clientX - r.left) / r.width;
+    my = (e.clientY - r.top) / r.height;
+    over = true;
+  });
+  host.addEventListener("pointerleave", () => (over = false));
+  window.addEventListener("resize", resize);
+  canvas.addEventListener("webglcontextlost", (e) => {
+    e.preventDefault();
+    ready = false;
+    canvas.style.display = "none";
+  });
+  function draw(t) {
+    if (!ready) return;
+    const disabled = document.documentElement.classList.contains("no-motion");
+    if (visible) {
+      px += (mx - px) * 0.06;
+      py += (my - py) * 0.06;
+      amount += ((over && !disabled ? 1 : 0) - amount) * 0.045;
+      gl.uniform2f(loc.mouse, px, py);
+      gl.uniform1f(loc.amount, amount);
+      gl.uniform1f(loc.time, t * 0.001);
+      gl.drawArrays(gl.TRIANGLES, 0, 6);
+    }
+    requestAnimationFrame(draw);
+  }
+  if (img.complete) initialize();
+  else img.addEventListener("load", initialize, { once: true });
+})();
