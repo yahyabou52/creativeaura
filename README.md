@@ -11,6 +11,8 @@ npm run dev
 
 Open the URL printed by Vite (normally `http://localhost:5173/`). Use `npm run build` for a production build in `dist/`.
 
+Run `npm test` after building to check service dropdown behavior, initial and dynamically added Lucide icons, image references, and the nine generated route pages. These DOM checks do not replace a visual browser review. `npm run dev` and `npm run build` generate the legacy HTML icon assets from Lucide React automatically.
+
 ## Where to edit
 
 - `src/main.jsx` contains the React page structure and script loading.

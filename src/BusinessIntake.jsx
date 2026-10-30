@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./styles/business-intake.css";
+import Icon from "./Icons";
 
 const STORAGE_KEY = "creativeaura:business-intake:v1";
 const STEP_KEY = "creativeaura:business-intake:step:v1";
@@ -161,7 +162,7 @@ export default function BusinessIntake() {
       <header className="intake-header">
         <a className="intake-brand" href="/" aria-label="CreativeAura home">creative<span>Aura</span><img className="aura-face intake-brand-face" src="/assets/aura-face.png" alt="" aria-hidden="true" /></a>
         <span>WEBSITE FOUNDATION / LOCAL WORKSHEET</span>
-        <a className="intake-exit" href="/">Back to site ↗</a>
+        <a className="intake-exit" href="/">Back to site <Icon name="ArrowUpRight" /></a>
       </header>
 
       <div className="intake-layout">
@@ -171,10 +172,10 @@ export default function BusinessIntake() {
           <nav aria-label="Business information steps">
             {steps.map((item, index) => (
               <button key={item.title} type="button" className={step === index ? "active" : ""} onClick={() => { setStep(index); setError(""); }} aria-current={step === index ? "step" : undefined}>
-                <span>{String(index + 1).padStart(2, "0")}</span>{item.title}<span className="rail-check">{item.fields.some((field) => answers[field.id]?.trim()) ? "●" : "○"}</span>
+                <span>{String(index + 1).padStart(2, "0")}</span>{item.title}<span className="rail-check">{item.fields.some((field) => answers[field.id]?.trim()) ? <Icon name="CircleCheck" /> : <Icon name="Circle" />}</span>
               </button>
             ))}
-            <button type="button" className={isReview ? "active" : ""} onClick={() => { setStep(steps.length); setError(""); }} aria-current={isReview ? "step" : undefined}><span>07</span>Review & export<span className="rail-check">↗</span></button>
+            <button type="button" className={isReview ? "active" : ""} onClick={() => { setStep(steps.length); setError(""); }} aria-current={isReview ? "step" : undefined}><span>07</span>Review & export<span className="rail-check"><Icon name="ArrowUpRight" /></span></button>
           </nav>
           <div className="intake-progress"><span>{answered} answers saved</span><div><i style={{ width: `${(answered / Object.keys(initialAnswers).length) * 100}%` }} /></div></div>
         </aside>
@@ -192,13 +193,13 @@ export default function BusinessIntake() {
                 ))}
               </div>
               {error && <p className="intake-error" role="alert">{error}</p>}
-              <div className="intake-actions"><button type="button" className="intake-back" onClick={() => setStep((current) => Math.max(0, current - 1))} disabled={step === 0}>← Previous</button><span role="status">{notice}</span><button type="button" className="intake-next" onClick={next}>Next step <b>↗</b></button></div>
+              <div className="intake-actions"><button type="button" className="intake-back" onClick={() => setStep((current) => Math.max(0, current - 1))} disabled={step === 0}><Icon name="ArrowLeft" /> Previous</button><span role="status">{notice}</span><button type="button" className="intake-next" onClick={next}>Next step <b><Icon name="ArrowUpRight" /></b></button></div>
             </>
           ) : (
             <>
               <div className="intake-heading"><span className="intake-kicker">07 / REVIEW</span><h1>Your story,<br />in progress<img className="aura-face intake-heading-face" src="/assets/aura-face.png" alt="" aria-hidden="true" /></h1><p>Check your answers, revisit any section, then download a copy to share with us later</p></div>
-              <div className="intake-review">{steps.map((section, index) => <article key={section.title}><div><span>{String(index + 1).padStart(2, "0")} / {section.title}</span><button type="button" onClick={() => setStep(index)}>Edit ↗</button></div>{section.fields.map((field) => <p key={field.id}><strong>{field.label}</strong><span>{answers[field.id]?.trim() || "Not answered yet"}</span></p>)}</article>)}</div>
-              <div className="intake-actions intake-review-actions"><button type="button" className="intake-back" onClick={() => setStep(steps.length - 1)}>← Previous</button><span role="status">{notice}</span><button type="button" className="intake-next" onClick={download}>Download answers <b>↓</b></button></div>
+              <div className="intake-review">{steps.map((section, index) => <article key={section.title}><div><span>{String(index + 1).padStart(2, "0")} / {section.title}</span><button type="button" onClick={() => setStep(index)}>Edit <Icon name="ArrowUpRight" /></button></div>{section.fields.map((field) => <p key={field.id}><strong>{field.label}</strong><span>{answers[field.id]?.trim() || "Not answered yet"}</span></p>)}</article>)}</div>
+              <div className="intake-actions intake-review-actions"><button type="button" className="intake-back" onClick={() => setStep(steps.length - 1)}><Icon name="ArrowLeft" /> Previous</button><span role="status">{notice}</span><button type="button" className="intake-next" onClick={download}>Download answers <b><Icon name="ArrowDown" /></b></button></div>
             </>
           )}
         </section>

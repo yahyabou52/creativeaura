@@ -4,16 +4,21 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
+    "predev": "node scripts/generate-ui-icons.mjs",
+    "prebuild": "node scripts/generate-ui-icons.mjs",
+    "test": "node scripts/verify-site.mjs",
     "dev": "vite --host 0.0.0.0",
     "build": "vite build && node scripts/generate-route-pages.mjs",
     "preview": "vite preview --host 0.0.0.0",
     "format": "prettier --write src/legacy/*.js src/markup/*.html src/seo.js"
   },
   "dependencies": {
+    "lucide-react": "^1.64.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
   "devDependencies": {
+    "linkedom": "^0.18.14",
     "prettier": "^3.9.10",
     "vite": "^7.1.0"
   }

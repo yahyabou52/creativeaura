@@ -689,6 +689,125 @@
   .attachment-copy strong { font-size: 13px; }
   .attachment-copy > span, .attachment-name { font-size: 12px; }
 }
+.hero-stage > .round-link > span {
+  position:relative;
+  isolation:isolate;
+  width:62%;
+  height:62%;
+  background:transparent;
+  border:0;
+  box-shadow:none;
+}
+.hero-stage > .round-link > span::before {
+  content:"";
+  position:absolute;
+  inset:3%;
+  z-index:-1;
+  border-radius:50%;
+  background:radial-gradient(circle,#eefaff 0%,#b4eafa 48%,transparent 75%);
+  filter:blur(8px);
+  pointer-events:none;
+}
+.hero-stage > .round-link > span .scroll-aura-face { width:100%; height:100%; }
+/* One stroke and sizing system for interface icons; brand SVGs stay separate. */
+svg.ui-icon {
+  display:inline-block;
+  position:static;
+  inset:auto;
+  flex:none;
+  width:1.2em;
+  height:1.2em;
+  min-width:16px;
+  min-height:16px;
+  margin:0;
+  padding:0;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.75;
+  vertical-align:middle;
+  pointer-events:none;
+  animation:none;
+}
+.menu-toggle:has(.ui-icon) { display:grid; place-items:center; }
+.menu-toggle svg.ui-icon { width:23px; height:23px; color:var(--paper); }
+.header-actions > .small-cta::before { content:none; display:none; }
+.header-actions > .small-cta > span { display:grid; place-items:center; }
+.header-actions > .small-cta svg.ui-icon { width:22px; height:22px; }
+.visual-arrow { display:flex; align-items:center; justify-content:center; }
+.visual-arrow svg.ui-icon { width:28px; height:28px; }
+/* The portfolio cover's own Explore control already contains its arrow. */
+.portfolio-card-cover .visual-arrow,
+.project-cover .visual-arrow,
+.art-viewer-content .visual-arrow { display:none; }
+.nav-close svg.ui-icon,.dialog-close svg.ui-icon { width:28px; height:28px; }
+.contact-circle > span svg.ui-icon { width:48px; height:48px; }
+.contact-page .menu-toggle svg.ui-icon { color:#83d9f3; }
+.contact-page .contact-header-cta svg.ui-icon { width:21px; height:21px; }
+.contact-page .contact-page-chips svg.ui-icon { width:22px; height:22px; }
+.contact-house-menu-top button { display:inline-flex; align-items:center; gap:8px; }
+.intake-actions button,.intake-exit,.intake-review button { display:inline-flex; align-items:center; gap:9px; }
+.intake-rail .rail-check svg.ui-icon { width:16px; height:16px; }
+@media(max-width:700px) { .contact-circle > span svg.ui-icon { width:28px; height:28px; } }
+.process-cards article { --aura-wash:#e0e5da; }
+/* Service dropdowns retain readable descriptions and scope details. */
+.expertise-grid { margin-top:0; align-items:start; }
+.expertise-intro p { font-size:18px; line-height:1.65; color:#34485a; max-width:38ch; }
+.service-list .service-item { border-top:1px solid var(--line); padding:0; }
+.service-list .service-item:last-child { border-bottom:1px solid var(--line); }
+.service-list .service-item summary { padding:25px 0; gap:16px; }
+.service-list .service-item summary h3 { flex:1; font-size:clamp(24px,2.1vw,32px); line-height:1.25; letter-spacing:-.025em; margin:0; font-weight:550; color:var(--ink); }
+.service-list .service-item summary:focus-visible { outline:2px solid #168bb5; outline-offset:5px; }
+.service-list .service-body { padding:0 0 28px; animation:none; }
+.service-list .service-body p { font-size:18px; line-height:1.65; color:#34485a; margin:0 0 18px; max-width:62ch; }
+.service-list .service-body > div { font-size:15px; line-height:1.75; letter-spacing:0; color:#34485a; }
+.service-list .service-body b { color:#547588; margin-inline:7px; }
+.service-list .service-start { font-size:15px; line-height:1.4; min-height:48px; margin-top:22px; }
+.process > .process-title { margin-top:0; }
+.studio > .studio-grid { margin-top:0; }
+.contact > .contact-title { margin-top:0; }
+@media(max-width:700px) {
+  .expertise-grid { gap:32px; }
+  .expertise-intro p,.service-list .service-body p { font-size:17px; }
+  .service-list .service-body > div { font-size:15px; }
+  .service-list .service-item summary { padding:23px 0; }
+}
+.process-cards article:nth-child(2) { --aura-wash:#d9edf1; }
+.process-cards article:nth-child(3) { --aura-wash:#e2dce9; }
+.process-aura-art {
+  position:relative;
+  isolation:isolate;
+  display:grid;
+  place-items:center;
+  width:clamp(170px,14vw,200px);
+  aspect-ratio:1;
+  margin:16px auto 34px;
+}
+.process-aura-art::before {
+  content:"";
+  position:absolute;
+  inset:3%;
+  z-index:-1;
+  border-radius:50%;
+  background:radial-gradient(circle at 40% 35%,var(--paper) 0%,var(--aura-wash) 72%);
+  border:1px solid #10213d08;
+}
+.process-aura-art img {
+  display:block;
+  width:94%;
+  height:94%;
+  object-fit:contain;
+  filter:saturate(.78) contrast(.96) brightness(1.02) drop-shadow(0 4px 5px #10213d0b);
+  transition:transform .4s;
+}
+.process-cards article:hover { transform:none; }
+.process-cards article:hover .process-aura-art img { transform:translateY(-3px); }
+@media(max-width:700px) {
+  .process-cards article { display:flex; flex-direction:column; }
+  .process-aura-art { width:170px; margin:8px auto 26px; }
+  .process-cards h3 { margin-top:12px; }
+  .process-cards p { max-width:none; }
+}
+@media(prefers-reduced-motion:reduce) { .process-aura-art img { transition:none; } .process-cards article:hover .process-aura-art img { transform:none; } }
 .contact-lower { display: block; }
 .contact-direct { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin: 20px 0 0; position: relative; z-index: 2; }
 .contact-direct a { display: inline-flex; align-items: center; min-height: 52px; padding: 10px 19px; border: 1px solid var(--accent); border-radius: 999px; color: var(--accent); font-size: 15px; font-weight: 700; text-decoration: none; transition: background .2s, color .2s; }

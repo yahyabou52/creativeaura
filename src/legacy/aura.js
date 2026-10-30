@@ -228,44 +228,41 @@
   $(".work-next").addEventListener("click", () => jumpWork(1));
   $(".work-prev").addEventListener("click", () => jumpWork(-1));
   const serviceAnimations = new WeakMap();
-  function animateService(d, open) {
-    const active = serviceAnimations.get(d);
-    const start = d.getBoundingClientRect().height;
-    if (active) active.cancel();
+  function animateService(detail, open) {
+    const start = detail.getBoundingClientRect().height;
+    serviceAnimations.get(detail)?.cancel();
     if (!motion) {
-      d.open = open;
-      d.style.height = "";
-      d.style.overflow = "";
+      detail.open = open;
+      detail.style.height = "";
+      detail.style.overflow = "";
       return;
     }
-    d.style.overflow = "hidden";
-    if (open) d.open = true;
-    const summary = $("summary", d);
-    const end = open
-      ? summary.offsetHeight + $(".service-body", d).offsetHeight
-      : summary.offsetHeight;
-    const animation = d.animate(
+    detail.style.overflow = "hidden";
+    if (open) detail.open = true;
+    const summary = $("summary", detail);
+    const end = summary.offsetHeight + (open ? $(".service-body", detail).offsetHeight : 0) + 1;
+    const animation = detail.animate(
       { height: [start + "px", end + "px"] },
       { duration: 420, easing: "cubic-bezier(.16,1,.3,1)" },
     );
-    serviceAnimations.set(d, animation);
+    serviceAnimations.set(detail, animation);
     animation.onfinish = () => {
-      d.open = open;
-      d.style.height = "";
-      d.style.overflow = "";
-      serviceAnimations.delete(d);
+      detail.open = open;
+      detail.style.height = "";
+      detail.style.overflow = "";
+      serviceAnimations.delete(detail);
     };
   }
-  $$(".service-list details").forEach((d) =>
-    $("summary", d).addEventListener("click", (e) => {
-      e.preventDefault();
-      const open = !d.open;
+  $$(".service-list details").forEach((detail) => {
+    $("summary", detail).addEventListener("click", (event) => {
+      event.preventDefault();
+      const open = !detail.open;
       $$(".service-list details").forEach((other) => {
-        if (other !== d && other.open) animateService(other, false);
+        if (other !== detail && other.open) animateService(other, false);
       });
-      animateService(d, open);
-    }),
-  );
+      animateService(detail, open);
+    });
+  });
   const projectData = [
     {
       title: "NOVA — Everyday, reimagined",

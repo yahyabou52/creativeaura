@@ -7,6 +7,7 @@ import "./styles/improvements.css";
 import { updatePageMetadata } from "./seo";
 import BusinessIntake from "./BusinessIntake";
 import ContactPage from "./ContactPage";
+import { installLegacyIcons } from "./Icons";
 
 const sections = import.meta.glob("./markup/*.html", {
   eager: true,
@@ -49,6 +50,7 @@ const legacyModules = [
 
 function App() {
   useEffect(() => {
+    const removeIcons = installLegacyIcons(document.getElementById("root"));
     // The original animation and routing code still manages its own DOM nodes.
     // Import in its original order after React has mounted the page.
     let cancelled = false;
@@ -64,6 +66,7 @@ function App() {
     window.addEventListener("aura:route", updatePageMetadata);
     window.addEventListener("popstate", updatePageMetadata);
     return () => {
+      removeIcons();
       cancelled = true;
       window.removeEventListener("aura:route", updatePageMetadata);
       window.removeEventListener("popstate", updatePageMetadata);
