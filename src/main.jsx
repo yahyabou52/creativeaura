@@ -8,6 +8,8 @@ import { updatePageMetadata } from "./seo";
 import BusinessIntake from "./BusinessIntake";
 import ContactPage from "./ContactPage";
 import { installLegacyIcons } from "./Icons";
+import { SiteHeader, SiteNavigation } from "./SiteChrome";
+import "./styles/mobile.css";
 
 const sections = import.meta.glob("./markup/*.html", {
   eager: true,
@@ -79,8 +81,8 @@ function App() {
       <Markup name="loader" />
       <Markup name="cursor" />
       <Markup name="reading_progress" />
-      <Markup name="site_header" />
-      <Markup name="navigation" />
+      <SiteHeader />
+      <SiteNavigation />
       <main data-home-page="" id="main">
         {homeSections.map((name) => (
           <Markup key={name} name={name} />

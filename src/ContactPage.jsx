@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./styles/contact-page.css";
-import siteHeaderMarkup from "./markup/site_header.html?raw";
 import Icon from "./Icons";
+import { SiteHeader, SiteNavigation } from "./SiteChrome";
 
 const MAX_FILE_BYTES = 20 * 1024 * 1024;
 const services = [
@@ -11,7 +11,6 @@ const services = [
   "Digital tools",
   "Photo, video & motion",
 ];
-const logoSvg = siteHeaderMarkup.match(/<svg\b[\s\S]*?<\/svg>/i)?.[0] || "";
 const DB_NAME = "creativeaura-inquiries";
 
 function ContactIcon({ type }) {
@@ -71,6 +70,13 @@ export default function ContactPage() {
     setSelected((current) => current.includes(service) ? current.filter((item) => item !== service) : [...current, service]);
   }
 
+  useEffect(() => {
+    if (!menuOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = previousOverflow; };
+  }, [menuOpen]);
+
   function chooseFile(event) {
     const chosen = event.target.files?.[0] || null;
     if (chosen && chosen.size > MAX_FILE_BYTES) {
@@ -113,12 +119,10 @@ export default function ContactPage() {
 
   return (
     <main className="contact-page" id="main">
-      <header className="site-header contact-site-header">
-        <a aria-label="CreativeAura home" className="brand" href="/" dangerouslySetInnerHTML={{ __html: logoSvg }} />
-        <nav className="header-note contact-header-links" aria-label="Site navigation"><a href="/">Home</a><a href="/#studio">Studio</a><a href="/portfolio">Portfolio</a><a href="/#services">Services</a></nav>
-        <div className="header-actions"><a className="small-cta contact-header-cta" href="#project-form">Start a project <span aria-hidden="true"><Icon name="ArrowUpRight" /></span></a><button className="menu-toggle" aria-expanded={menuOpen} aria-label="Open navigation" type="button" onClick={() => { menuRef.current?.showModal(); setMenuOpen(true); }}><Icon name="Menu" /></button></div>
-      </header>
-      <dialog ref={menuRef} className="contact-house-menu" onClose={() => setMenuOpen(false)}><div className="contact-house-menu-top"><span>CREATIVEAURA / COME ON IN</span><button type="button" onClick={() => menuRef.current?.close()} aria-label="Close navigation">Close <Icon name="X" /></button></div><nav aria-label="Expanded navigation"><a href="/">Home <span><Icon name="ArrowUpRight" /></span></a><a href="/#studio">Studio <span><Icon name="ArrowUpRight" /></span></a><a href="/portfolio">Portfolio <span><Icon name="ArrowUpRight" /></span></a><a href="/#services">Services <span><Icon name="ArrowUpRight" /></span></a><a href="/contact" onClick={() => menuRef.current?.close()}>Let’s talk <span><Icon name="ArrowUpRight" /></span></a></nav><p>CASABLANCA / EVERYWHERE</p></dialog>
+      <SiteHeader innerPage menuOpen={menuOpen}
+        onOpenMenu={() => { menuRef.current?.showModal(); setMenuOpen(true); }}
+        onStartProject={() => document.getElementById("project-form")?.scrollIntoView({ behavior:"smooth", block:"start" })} />
+      <SiteNavigation innerPage dialogRef={menuRef} onClose={() => setMenuOpen(false)} />
 
       <div className="contact-page-grid">
         <section className="contact-page-form-side" aria-labelledby="contact-page-title">
